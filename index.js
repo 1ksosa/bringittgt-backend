@@ -43,7 +43,7 @@ const {
   };
   
 
-  
+
   app.post("/register", async (req, res, next) => {
     try {
       const { email, firstName, lastName, password } = req.body;
@@ -77,3 +77,41 @@ const {
       next(error);
     }
   }); 
+
+  app.get("/aboutMe", isLoggedIn, async (req, res, next) => {
+    try {
+      res.status(200).send(req.customer);
+    } catch (error) {
+      next(error);
+    }
+  });
+  
+  app.get("/users", isLoggedIn, async (req, res, next) => {
+    try {
+      const response = await getUsers();
+      res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  });
+  
+  app.get("/user", isLoggedIn, async (req, res, next) => {
+    try {
+      const { id } = req.body;
+      const response = await getUser(id);
+      res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  });
+  
+  app.delete("/user", isLoggedIn, async (req, res, next) => {
+    try {
+      const { email } = req.body;
+      const response = await deleteUser(email);
+      res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  });
+  
