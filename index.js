@@ -114,4 +114,28 @@ const {
       next(error);
     }
   });
+  app.put("/update/:id", isLoggedIn, async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { email, firstName, lastName, password } = req.body;
+  
+      const salt = await bcrypt.genSalt(10);
+      const hashPassword = await bcrypt.hash(password, salt);
+      const response = await updateUser(
+        id,
+        email,
+        firstName,
+        lastName,
+        hashPassword
+      );
+  
+      res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  });
+  
+  app.listen(PORT, async () => {
+    console.log(`I am listening on port number ${PORT}`);
+  });
   
