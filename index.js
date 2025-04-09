@@ -15,7 +15,7 @@ const {
     getClient,
     deleteUser,
     updateUser,
-  } = require("./db");
+  } = require("./database");
   const setToken = (id) => {
     return jwt.sign({ id }, JWT_SECRET, { expiresIn: "24h" });
   };
